@@ -1,0 +1,2 @@
+# StudentMangement
+Simple Student Mangement
