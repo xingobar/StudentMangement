@@ -16,7 +16,9 @@ class UsersTableSeeder extends Seeder
             'username' => 'gary',
             'email' => 'gary@gmail.com',
             'password' => bcrypt('garygarygary123'),
-            'remember_token' => str_random(10)
+            'remember_token' => str_random(10),
+            'role_id'=>1,
+            'active' => 1,
         ]);
     }
 }

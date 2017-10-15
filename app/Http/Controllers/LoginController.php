@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
 use Auth;
+use Log;
 
 class LoginController extends Controller
 {
@@ -20,7 +21,7 @@ class LoginController extends Controller
     protected $username = 'username';
     protected $guard = 'web';
 
-    public function login()
+    public function getLogin()
     {
         // To check if user is logged in
         if(Auth::guard('web')->check())
@@ -33,8 +34,8 @@ class LoginController extends Controller
     public function postLogin(Request $request)
     {
         $auth = Auth::guard('web')->attempt([
-            'username'=>$request->username,
-            'password'=>$request->password,
+            'username'=>$request->input('username'),
+            'password'=>$request->input('password'),
             'active'=>1,
         ]);
 
@@ -47,7 +48,7 @@ class LoginController extends Controller
 
     public function getLogout()
     {
-        Auth:guard('web')->logout();
+        Auth::guard('web')->logout();
         return redirect()->route('/');
     }
 }

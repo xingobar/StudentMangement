@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class Authen
 {
@@ -13,8 +14,13 @@ class Authen
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next,$guard = 'web')
     {
+        // if user does not login , he will redirect to login page
+        if(!Auth::guard($guard)->check())
+        {
+            return redirect()->route('/');
+        }
         return $next($request);
     }
 }
