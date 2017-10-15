@@ -7,7 +7,7 @@
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
     </div>
     <!--logo start-->
-    <a href="index.html" class="logo"><b>DASHGUM FREE</b></a>
+    <a href="index.html" class="logo"><b>DASHBOARD</b></a>
     <!--logo end-->
     <div class="nav notify-row" id="top_menu">
         <!--  notification start -->
@@ -94,7 +94,7 @@
                     </li>
                     <li>
                         <a href="index.html#">
-                            <span class="photo"><img alt="avatar" src="img/ui-zac.jpg"></span>
+                            <span class="photo"><img alt="avatar" src="{{asset('img/ui-zac.jpg')}}"></span>
                             <span class="subject">
                                     <span class="from">Zac Snider</span>
                                     <span class="time">Just now</span>
@@ -106,7 +106,7 @@
                     </li>
                     <li>
                         <a href="index.html#">
-                            <span class="photo"><img alt="avatar" src="img/ui-divya.jpg"></span>
+                            <span class="photo"><img alt="avatar" src="{{asset('img/ui-divya.jpg')}}"></span>
                             <span class="subject">
                                     <span class="from">Divya Manian</span>
                                     <span class="time">40 mins.</span>
@@ -118,7 +118,7 @@
                     </li>
                     <li>
                         <a href="index.html#">
-                            <span class="photo"><img alt="avatar" src="img/ui-danro.jpg"></span>
+                            <span class="photo"><img alt="avatar" src="{{asset('img/ui-danro.jpg')}}"></span>
                             <span class="subject">
                                     <span class="from">Dan Rogers</span>
                                     <span class="time">2 hrs.</span>
@@ -130,7 +130,7 @@
                     </li>
                     <li>
                         <a href="index.html#">
-                            <span class="photo"><img alt="avatar" src="img/ui-sherman.jpg"></span>
+                            <span class="photo"><img alt="avatar" src="{{asset('img/ui-sherman.jpg')}}"></span>
                             <span class="subject">
                                     <span class="from">Dj Sherman</span>
                                     <span class="time">4 hrs.</span>
