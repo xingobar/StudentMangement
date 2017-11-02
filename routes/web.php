@@ -33,7 +33,7 @@ Route::group(['middleware'=>['authen']],function(){
 
 });
 
-Route::group(['middleware',['authen','roles'] , 'roles'=> ['admin']],function(){
+Route::group(['middleware' => ['authen','roles'] , 'roles'=> ['admin']],function(){
 
     // for admin
     Route::get('/createuser',function(){
@@ -43,5 +43,15 @@ Route::group(['middleware',['authen','roles'] , 'roles'=> ['admin']],function(){
     Route::get('/manage/course',[
        'as'=>'manageCourse',
         'uses'=>'CourseController@getManageCourse'
+    ]);
+
+    Route::post('/manage/course/insert',[
+        'as' => 'postInsertAcademic',
+        'uses' => 'CourseController@postInsertAcademic'
+    ]);
+
+    Route::post('/manage/course/insert-program',[
+       'as' => 'postInsertProgram',
+        'uses' => 'CourseController@postInsertProgram'
     ]);
 });

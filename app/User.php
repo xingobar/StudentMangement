@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo('App\Role','id','role_id');
+        return $this->belongsTo('App\Role','role_id','id');
     }
 
     private function checIfUserHasRole($need_role)

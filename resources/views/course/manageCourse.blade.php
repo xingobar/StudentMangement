@@ -8,6 +8,8 @@
 
 
 @section('content')
+    @include('course.popup.academic')
+    @include('course.popup.program')
     <h3><i class="fa fa-angle-right"></i>Manage Course</h3>
     <div class="row mt">
         <div class="col-lg-12">
@@ -19,11 +21,14 @@
                         <div class="col-md-4">
                             <label for="academic-year" class="control-label">Academic Year</label>
                             <div class="input-group">
-                                <select class="form-control" name="academic_id" id="academic-year">
-
+                                <select class="form-control" name="academic_id" id="academic_id">
+                                    <option>----------</option>
+                                    @foreach($academics as $academic)
+                                        <option value="{{$academic->academic_id}}">{{$academic->academic}}</option>
+                                    @endforeach
                                 </select>
                                 <div class="input-group-addon">
-                                    <span class="fa fa-plus"></span>
+                                    <span class="fa fa-plus add_more_academic"></span>
                                 </div>
                             </div>
                         </div>
@@ -31,11 +36,14 @@
                         <div class="col-md-4">
                             <label for="program" class="control-label">Course</label>
                             <div class="input-group">
-                                <select class="form-control" name="program_id" id="program">
-
+                                <select class="form-control" name="program_id" id="program_id">
+                                    <option>----------</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->program_id}}">{{$program->program}}</option>
+                                    @endforeach
                                 </select>
                                 <div class="input-group-addon">
-                                    <span class="fa fa-plus"></span>
+                                    <span class="fa fa-plus" id="add_more_program"></span>
                                 </div>
                             </div>
                         </div>
@@ -145,6 +153,47 @@
             startDate:'today',
             autoclose:true,
         });
+
+        $(".add_more_academic").click(function(){
+            $("#academic_year_show").modal();
+        });
+
+        $('.btn-save-academic').click(function(){
+            var academic = $("#academic_year").val();
+           // $('#academic_id').val(academic);
+            $.post("{{route ('postInsertAcademic') }}" , {academic:academic} , function(response){
+                console.log(response);
+                $("#academic_year_show").modal('hide');
+                if(response !== "" ){
+                    $("#academic_id").append($("<option></option>",{
+                        value : response.academic_id,
+                        text : response.academic
+                    }));
+                }
+
+                $("#academic_year").val("");
+            });
+        });
+
+        $("#add_more_program").click(function(){
+            $("#program_show").modal();
+        });
+
+        $(".btn-save-program").click(function(){
+           var program = $("#program").val();
+           var description = $("#description").val();
+
+           $.post("{{route('postInsertProgram')}}", {program:program,description:description},function(response){
+                $("#program_show").modal('hide');
+                $("#program_id").append($("<option></option>",{
+                    value : response.program_id,
+                    text : response.program
+                }));
+                $("#program").val("");
+                $("#description").val("");
+           });
+        });
+
     </script>
 
 @endsection
