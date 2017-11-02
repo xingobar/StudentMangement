@@ -10,12 +10,13 @@
 @section('content')
     @include('course.popup.academic')
     @include('course.popup.program')
+    @include('course.popup.level')
     <h3><i class="fa fa-angle-right"></i>Manage Course</h3>
     <div class="row mt">
         <div class="col-lg-12">
             <div class="form-panel">
                 <h4 class="mb"><i class="fa fa-angle-right"></i>Manage Course</h4>
-                <form class="form-horizontal style-form" method="post">
+                <form class="form-horizontal style-form create-course-form" method="post">
 
                     <div class="form-group">
                         <div class="col-md-4">
@@ -51,11 +52,11 @@
                         <div class="col-md-4">
                             <label for="level" class="control-label">Level</label>
                             <div class="input-group">
-                                <select class="form-control" name="level_id" id="level">
+                                <select class="form-control" name="level_id" id="level_id">
 
                                 </select>
                                 <div class="input-group-addon">
-                                    <span class="fa fa-plus"></span>
+                                    <span class="fa fa-plus" id="add_more_level"></span>
                                 </div>
                             </div>
                         </div>
@@ -191,6 +192,38 @@
                 }));
                 $("#program").val("");
                 $("#description").val("");
+           });
+        });
+
+        $("#add_more_level").click(function(){
+           $("#level_show").modal();
+        });
+
+        $("#form_level_create").submit(function(e){
+            e.preventDefault();
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+            $.post(url,data,function(response){
+               $("#level_show").modal('hide');
+               $("#level_id").append($("<option></option>",{
+                   value : response.level_id,
+                   text : response.level
+               }));
+            });
+        });
+
+        $(".create-course-form  #program_id").change(function(){
+           var program_id = $(this).val();
+           var level = $("#level_id");
+           $(level).empty();
+           $.get("{{route('showLevel')}}",{program_id:program_id},function(response){
+
+               $.each(response,function(i,row){
+                   $(level).append($("<option></option>",{
+                       value : row.level_id,
+                       text : row.level
+                   }));
+               });
            });
         });
 

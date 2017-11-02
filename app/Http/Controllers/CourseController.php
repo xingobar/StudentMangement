@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Academic;
 use App\Program;
+use App\Level;
 
 class CourseController extends Controller
 {
@@ -45,6 +46,22 @@ class CourseController extends Controller
         if($request->ajax())
         {
             return response(Program::create($request->all()));
+        }
+    }
+
+    public function postInsertLevel(Request $request)
+    {
+        if($request->ajax())
+        {
+            return response(Level::create($request->all()));
+        }
+    }
+
+    public function showLevel(Request $request)
+    {
+        if($request->ajax())
+        {
+            return response(Level::where('program_id',$request->program_id)->get());
         }
     }
 }

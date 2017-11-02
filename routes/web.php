@@ -54,4 +54,14 @@ Route::group(['middleware' => ['authen','roles'] , 'roles'=> ['admin']],function
        'as' => 'postInsertProgram',
         'uses' => 'CourseController@postInsertProgram'
     ]);
+
+    Route::post('/manage/course/insert-level',[
+       'as' => 'postInsertLevel',
+        'uses' => 'CourseController@postInsertLevel'
+    ]);
+
+    Route::get('/manage/course/showLevel',[
+        'as' => 'showLevel',
+        'uses' => 'CourseController@showLevel'
+    ]);
 });
