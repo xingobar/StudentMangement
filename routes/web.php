@@ -64,4 +64,24 @@ Route::group(['middleware' => ['authen','roles'] , 'roles'=> ['admin']],function
         'as' => 'showLevel',
         'uses' => 'CourseController@showLevel'
     ]);
+
+    Route::post('/manage/course/insert-shift',[
+        'as' => 'postInsertShift',
+        'uses' => 'CourseController@postInsertShift'
+    ]);
+
+    Route::post('/manage/course/insert-time',[
+        'as' => 'postInsertTime',
+        'uses' => 'CourseController@postInsertTime'
+    ]);
+
+    Route::post('/manage/course/insert-batch',[
+        'as' => 'postInsertBatch',
+        'uses' => 'CourseController@postInsertBatch'
+    ]);
+
+    Route::post('/manage/course/insert-group',[
+       'as' => 'postInsertGroup',
+        'uses' => 'CourseController@postInsertGroup'
+    ]);
 });
