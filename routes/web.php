@@ -84,4 +84,9 @@ Route::group(['middleware' => ['authen','roles'] , 'roles'=> ['admin']],function
        'as' => 'postInsertGroup',
         'uses' => 'CourseController@postInsertGroup'
     ]);
+
+    Route::post('/manage/course/insert-class',[
+       'as' => 'postInsertClass',
+        'uses'=> 'CourseController@postInsertClasses'
+    ]);
 });

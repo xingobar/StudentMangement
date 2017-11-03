@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Batch;
+use App\Classes;
 use App\Group;
 use App\Shift;
 use Illuminate\Http\Request;
@@ -127,6 +128,14 @@ class CourseController extends Controller
                 return response(Group::create($request->all()));
             }
             return response('');
+        }
+    }
+
+    public function postInsertClasses(Request $request)
+    {
+        if($request->ajax())
+        {
+            return response(Classes::create($request->all()));
         }
     }
 }

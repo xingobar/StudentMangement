@@ -21,8 +21,8 @@
         <div class="col-lg-12">
             <div class="form-panel">
                 <h4 class="mb"><i class="fa fa-angle-right"></i>Manage Course</h4>
-                <form class="form-horizontal style-form create-course-form" method="post">
-
+                <form action="{{route('postInsertClass')}}" class="form-horizontal style-form create-course-form" method="post">
+                    <input type="hidden" value="1" id="active" name="active">
                     <div class="form-group">
                         <div class="col-md-4">
                             <label for="academic-year" class="control-label">Academic Year</label>
@@ -327,6 +327,15 @@
                $("#form-group-create #groups").val("");
                $("#group-show").modal('hide');
             });
+        });
+
+        $(".create-course-form").submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.post("{{route('postInsertClass')}}",data,function(response){
+                console.log(response);
+            });
+            $(this).trigger('reset');
         })
 
     </script>
