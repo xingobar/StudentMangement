@@ -138,4 +138,51 @@ class CourseController extends Controller
             return response(Classes::create($request->all()));
         }
     }
+
+    public function showClassInformation()
+    {
+        $classes = $this->getClassInformation();
+        return view('class.classInfo',[
+            'classes'=>$classes
+        ]);
+    }
+
+    public function getClassInformation()
+    {
+        $classes = Classes::join('academics','academics.academic_id','=','classes.academic_id')
+                            ->join('levels','levels.level_id','=','classes.level_id')
+                            ->join('shifts','shifts.shift_id','=','classes.shift_id')
+                            ->join('times','times.time_id','=','classes.time_id')
+                            ->join('groups','groups.group_id','=','classes.group_id')
+                            ->join('batches','batches.batch_id','=','classes.batch_id')
+                            ->join('programs','programs.program_id','=','levels.program_id')
+                            ->orderBy('classes.class_id','DESC')
+                            ->get();
+        return $classes;
+    }
+
+    public function deleteClass(Request $request)
+    {
+        if($request->ajax())
+        {
+            Classes::destroy($request->class_id);
+        }
+    }
+
+    public function editClass(Request $request)
+    {
+        if($request->ajax())
+        {
+            return response(Classes::find($request->class_id));
+        }
+    }
+
+    // ref : https://stackoverflow.com/questions/42695943/laravel-updateorcreate-method
+    public function updateClassInfo(Request $request)
+    {
+        if($request->ajax())
+        {
+            return response(Classes::updateOrCreate(['class_id' => $request->class_id],$request->all()));
+        }
+    }
 }

@@ -23,6 +23,7 @@
                 <h4 class="mb"><i class="fa fa-angle-right"></i>Manage Course</h4>
                 <form action="{{route('postInsertClass')}}" class="form-horizontal style-form create-course-form" method="post">
                     <input type="hidden" value="1" id="active" name="active">
+                    <input type="hidden" id="class_id" name="class_id">
                     <div class="form-group">
                         <div class="col-md-4">
                             <label for="academic-year" class="control-label">Academic Year</label>
@@ -129,7 +130,7 @@
                         <div class="col-md-3">
                             <label for="startDate" class="control-label">Start Date</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="start_date" id="startDate"/>
+                                <input type="text" class="form-control" name="start_date" id="startDate" required/>
                                 <div class="input-group-addon">
                                     <span class="fa fa-plus"></span>
                                 </div>
@@ -139,7 +140,7 @@
                         <div class="col-md-3">
                             <label for="endDate" class="control-label">End Date</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="end_date" id="endDate"/>
+                                <input type="text" class="form-control" name="end_date" id="endDate" required/>
                                 <div class="input-group-addon">
                                     <span class="fa fa-plus"></span>
                                 </div>
@@ -147,10 +148,26 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-theme">Create Course</button>
+                    <button type="button" class="btn btn-success btn-update-class">Update Course</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <div class="row mt">
+        <div class="col-lg-12">
+            <div class="form-panel">
+                <h4 class="mb"><i class="fa fa-angle-right"></i>Class Information</h4>
+                <div class="row">
+                    <div class="col-md-12" id="class_info">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 @endsection
 
 
@@ -172,6 +189,8 @@
             startDate: 'today',
             autoclose: true,
         });
+
+        showClassInformation();
 
         $(".add_more_academic").click(function () {
             $("#academic_year_show").modal();
@@ -334,9 +353,47 @@
             var data = $(this).serialize();
             $.post("{{route('postInsertClass')}}",data,function(response){
                 console.log(response);
+                showClassInformation();
             });
             $(this).trigger('reset');
         })
+
+        function showClassInformation()
+        {
+            $.get("{{route('showClassInformation')}}",function(response){
+                $("#class_info").empty().append(response);
+            });
+        }
+
+        $(document).on('click','.del-btn',function(){
+            var classId = $(this).val();
+            $.post('{{route('deleteClass')}}',{class_id:classId},function(response){
+                showClassInformation();
+            });
+        });
+
+        $(document).on('click','.edit-class',function(){
+            var class_id = $(this).data('id');
+            $.get("{{route('editClass')}}",{'class_id':class_id},function(response){
+                $("#academic_id").val(response.academic_id);
+                $("#level_id").val(response.level_id);
+                $("#shift_id").val(response.shift_id);
+                $("#time_id").val(response.time_id);
+                $("#group_id").val(response.group_id);
+                $("#batch_id").val(response.batch_id);
+                $("#startDate").val(response.start_date);
+                $("#endDate").val(response.end_date);
+                $("#class_id").val(response.class_id);
+            });
+        });
+
+        $(".btn-update-class").click(function (e) {
+            e.preventDefault();
+            var data = $('.create-course-form').serialize();
+            $.post("{{route('updateClass')}}",data,function(response){
+                showClassInformation();
+            });
+        });
 
     </script>
 
