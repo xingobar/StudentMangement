@@ -28,6 +28,16 @@
             </li>
 
             <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa fa-desktop"></i>
+                    <span>Student</span>
+                </a>
+                <ul class="sub">
+                    <li><a href="{{route('getStudentRegister')}}">Create Student</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
                 <a href="javascript:;" >
                     <i class="fa fa-desktop"></i>
                     <span>UI Elements</span>

@@ -109,4 +109,14 @@ Route::group(['middleware' => ['authen', 'roles'], 'roles' => ['admin']], functi
         'as' => 'updateClass',
         'uses' => 'CourseController@updateClassInfo'
     ]);
+
+    Route::get('/student/getregister',[
+        'as' => 'getStudentRegister',
+        'uses'=> 'StudentController@getStudentRegister'
+    ]);
+
+    Route::post('/student/postregister',[
+        'as' => 'postStudentRegister',
+        'uses' => 'StudentController@postStudentRegister'
+    ]);
 });
