@@ -29,7 +29,6 @@
                             <label for="academic-year" class="control-label">Academic Year</label>
                             <div class="input-group">
                                 <select class="form-control" name="academic_id" id="academic_id">
-                                    <option>----------</option>
                                     @foreach($academics as $academic)
                                         <option value="{{$academic->academic_id}}">{{$academic->academic}}</option>
                                     @endforeach
@@ -44,7 +43,7 @@
                             <label for="program" class="control-label">Course</label>
                             <div class="input-group">
                                 <select class="form-control" name="program_id" id="program_id">
-                                    <option>----------</option>
+                                    <option value=""></option>
                                     @foreach($programs as $program)
                                         <option value="{{$program->program_id}}">{{$program->program}}</option>
                                     @endforeach
@@ -71,7 +70,6 @@
                             <label for="shift" class="control-label">Shift</label>
                             <div class="input-group">
                                 <select class="form-control" name="shift_id" id="shift_id">
-                                    <option>----------</option>
                                     @foreach($shifts as $shift)
                                         <option value="{{$shift->shift_id}}">{{$shift->shift}}</option>
                                     @endforeach
@@ -86,7 +84,6 @@
                             <label for="time" class="control-label">Time</label>
                             <div class="input-group">
                                 <select class="form-control" name="time_id" id="time_id">
-                                    <option>----------</option>
                                     @foreach($times as $time)
                                         <option value="{{$time->time_id}}">{{$time->time}}</option>
                                     @endforeach
@@ -101,7 +98,6 @@
                             <label for="batch" class="control-label">Batch</label>
                             <div class="input-group">
                                 <select class="form-control" name="batch_id" id="batch_id">
-                                    <option>----------</option>
                                     @foreach($batches as $batch)
                                         <option value="{{$batch->batch_id}}">{{$batch->batch}}</option>
                                     @endforeach
@@ -116,7 +112,6 @@
                             <label for="group" class="control-label">Group</label>
                             <div class="input-group">
                                 <select class="form-control" name="group_id" id="group_id">
-                                    <option>----------</option>
                                     @foreach($groups as $group)
                                         <option value="{{$group->group_id}}">{{$group->groups}}</option>
                                     @endforeach
@@ -261,6 +256,7 @@
                         text: row.level
                     }));
                 });
+                //showClassInformation();
             });
         });
 
@@ -360,7 +356,8 @@
 
         function showClassInformation()
         {
-            $.get("{{route('showClassInformation')}}",function(response){
+            var data = $(".create-course-form").serialize();
+            $.get("{{route('showClassInformation')}}",data,function(response){
                 $("#class_info").empty().append(response);
             });
         }

@@ -92,7 +92,7 @@
                            style="text-decoration: none">
                             Choose Acadmemic
                         </a>
-                        <a href="#" class="pull-right">
+                        <a href="#" class="pull-right" id="show_class_info">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -330,17 +330,18 @@
             </div>
         </form>
     </div>
-
+@include('class.classPopup')
 @endsection
 
 @section('script')
     <script type="text/javascript">
+
         $("#browse_file").click(function(){
            $("#photo").click();
         });
 
         $("#photo").change(function(){
-
+            showFile(this,'#showPhoto');
         });
 
         function showFile(fileInput,img,showName){
@@ -349,10 +350,48 @@
                 reader.onload = function(e){
                     $(img).attr('src',e.target.result);
                 }
-                reader.readAsDataURL(fileInput,files[0]);
+                reader.readAsDataURL(fileInput.files[0]);
                 $(showName).text(fileInput.files[0].name);
             }
         }
+
+        $("#show_class_info").click(function (e) {
+            e.preventDefault();
+            showClassInformation();
+            $("#choose-academic").modal();
+        });
+
+        function showClassInformation()
+        {
+            var data = $(".create-view-form").serialize();
+            $.get("{{route('showClassInformation')}}",data,function(response){
+                $("#class_info").empty().append(response);
+            });
+        }
+
+        $(".create-view-form  #program_id").change(function () {
+            var program_id = $(this).val();
+            var level = $("#level_id");
+            $(level).empty();
+            $.get("{{route('showLevel')}}", {program_id: program_id}, function (response) {
+
+                $.each(response, function (i, row) {
+                    $(level).append($("<option></option>", {
+                        value: row.level_id,
+                        text: row.level
+                    }));
+                });
+                //showClassInformation();
+            });
+        });
+
+        $(document).on('click','.edit-class',function(e){
+            e.preventDefault();
+            $(".academic-detail").text($(this).text());
+            console.log($(this).text());
+        });
+
+
     </script>
 
 @endsection
